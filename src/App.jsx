@@ -2824,17 +2824,18 @@ export default function App(){
       <nav style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",
         width:"100%",maxWidth:440,background:"#fff",
         borderTop:`1px solid ${S[100]}`,
-        display:"flex",zIndex:50,boxShadow:"0 -2px 16px rgba(0,0,0,0.06)"}}>
+        display:"flex",zIndex:50,boxShadow:"0 -2px 16px rgba(0,0,0,0.06)",
+        minHeight:60,paddingBottom:"env(safe-area-inset-bottom, 16px)"}}>
         {TABS.map(t=>{
           const isSel=tab===t.id;
           return(
             <button key={t.id} onClick={()=>setTab(t.id)} style={{
               flex:1,display:"flex",flexDirection:"column",alignItems:"center",
-              gap:3,padding:"10px 4px 8px",background:"none",border:"none",cursor:"pointer",
+              gap:3,padding:"12px 4px 14px",background:"none",border:"none",cursor:"pointer",
             }}>
-              <div style={{width:3,height:3,borderRadius:99,
+              <div style={{width:4,height:4,borderRadius:99,
                 background:isSel?E[500]:"transparent",marginBottom:2}}/>
-              <span style={{fontSize:11,fontWeight:isSel?700:500,
+              <span style={{fontSize:13,fontWeight:isSel?700:500,
                 color:isSel?E[600]:S[400],transition:"color 0.2s"}}>{t.label}</span>
             </button>
           );
