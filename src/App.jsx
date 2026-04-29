@@ -1845,36 +1845,97 @@ function PrepararComentarios(){
     const estimatedSecs=Math.round(words*0.5);
     try{
       const r=await callClaude(
-        `Você é um instrutor de comentários em reuniões cristãs das Testemunhas de Jeová, gentil e encorajador.
+        `Você é um treinador espiritual especializado em preparação de comentários para reuniões das Testemunhas de Jeová.
+Princípio central: o usuário SEMPRE pensa primeiro, depois você orienta.
 
-PARÁGRAFO DO ESTUDO:
-"${paragrafo||"(não fornecido)"}"
+PARÁGRAFO: "${paragrafo||"(não fornecido)"}"
+PERGUNTA: "${pergunta}"
+${texto?`TEXTO BÍBLICO: ${texto}`:""}
+RESPOSTA DE ELAINE: "${resposta}"
 
-PERGUNTA:
-"${pergunta}"
+Responda APENAS em JSON válido, sem texto antes ou depois, seguindo esta estrutura:
+{
+  "fase": 2,
+  "avaliacao": {
+    "fidelidade": 0,
+    "clareza": 0,
+    "naturalidade": 0,
+    "base_biblica": 0,
+    "nota_geral": 0
+  },
+  "pontos_fortes": ["ponto 1"],
+  "sugestoes": ["sugestão 1"],
+  "versiculos_adicionais": ["versículo - razão"],
+  "versao_melhorada": "versão sugerida como exemplo",
+  "explicacao_paragrafo": "string",
+  "analise_textos": "string",
+  "licao_espiritual": "string",
+  "discernimento": {
+    "por_que_incluido": "string",
+    "por_que_agora": "string",
+    "o_que_jeova_quer": "string",
+    "tendencia_corrigir": "string"
+  },
+  "comentarios": {
+    "basico": "string",
+    "aplicacao": "string",
+    "profundo": "string",
+    "expressivo": "string"
+  }
+}`,1300);
 
-${texto?`TEXTO BÍBLICO RELACIONADO: ${texto}\n\n`:""}RESPOSTA DA IRMÃ ELAINE (estimativa: ~${estimatedSecs} segundos):
-"${resposta}"
+      let parsed;
+      try{
+        const clean=r.replace(/```json|```/g,"").trim();
+        parsed=JSON.parse(clean);
+      }catch(e){
+        setResult(r);
+        return;
+      }
 
-Faça uma avaliação encorajadora e construtiva com:
+      const av=parsed.avaliacao||{};
+      const notas=[
+        ["Fidelidade ao tema",av.fidelidade],
+        ["Clareza",av.clareza],
+        ["Naturalidade",av.naturalidade],
+        ["Base bíblica",av.base_biblica],
+        ["Nota geral",av.nota_geral],
+      ];
 
-**⏱️ Duração estimada**
-${estimatedSecs} segundos — avalie se está dentro do ideal (15-45 segundos para um bom comentário de reunião).
+      const formatado=[
+        "**📊 Avaliação**",
+        ...notas.map(([l,v])=>`${l}: ${"⭐".repeat(Math.round(v||0))} (${v||0}/10)`),
+        "",
+        parsed.pontos_fortes?.length?"**✅ Pontos fortes**\n"+parsed.pontos_fortes.map(p=>`• ${p}`).join("\n"):"",
+        "",
+        parsed.sugestoes?.length?"**💡 Sugestões**\n"+parsed.sugestoes.map(s=>`• ${s}`).join("\n"):"",
+        "",
+        parsed.versiculos_adicionais?.length?"**📖 Versículos adicionais**\n"+parsed.versiculos_adicionais.map(v=>`• ${v}`).join("\n"):"",
+        "",
+        parsed.versao_melhorada?`**✨ Versão melhorada**\n"${parsed.versao_melhorada}"`:"",
+        "",
+        parsed.explicacao_paragrafo?`**🔍 Explicação do parágrafo**\n${parsed.explicacao_paragrafo}`:"",
+        "",
+        parsed.licao_espiritual?`**🌱 Lição espiritual**\n${parsed.licao_espiritual}`:"",
+        "",
+        parsed.discernimento?[
+          "**🔦 Discernimento espiritual**",
+          parsed.discernimento.por_que_incluido?`Por que incluído: ${parsed.discernimento.por_que_incluido}`:"",
+          parsed.discernimento.por_que_agora?`Por que agora: ${parsed.discernimento.por_que_agora}`:"",
+          parsed.discernimento.o_que_jeova_quer?`O que Jeová quer: ${parsed.discernimento.o_que_jeova_quer}`:"",
+          parsed.discernimento.tendencia_corrigir?`Tendência a corrigir: ${parsed.discernimento.tendencia_corrigir}`:"",
+        ].filter(Boolean).join("\n"):"",
+        "",
+        parsed.comentarios?[
+          "**💬 Sugestões de comentário**",
+          parsed.comentarios.basico?`Básico: "${parsed.comentarios.basico}"`:"",
+          parsed.comentarios.aplicacao?`Aplicação: "${parsed.comentarios.aplicacao}"`:"",
+          parsed.comentarios.profundo?`Profundo: "${parsed.comentarios.profundo}"`:"",
+          parsed.comentarios.expressivo?`Expressivo: "${parsed.comentarios.expressivo}"`:"",
+        ].filter(Boolean).join("\n"):"",
+      ].filter(s=>s!==undefined).join("\n");
 
-**✅ O que ficou bom**
-Destaque os pontos fortes da resposta dela.
-
-**🎯 Responde à pergunta?**
-Verifique se aborda diretamente o que foi perguntado.
-
-**💡 Sugestão de melhoria**
-Com base exatamente no que ela disse, sugira uma versão melhorada do comentário (mantenha a voz dela, apenas lapide).
-
-**📝 Comentário sugerido**
-Escreva a versão refinada entre aspas, como se ela fosse falar.
-
-Seja sempre encorajador e positivo.`,1300);
-      setResult(r);
+      setResult(formatado);
     }catch(e){setResult("Erro ao avaliar. Verifique sua conexão.");}
     finally{setLoading(false);}
   }
