@@ -118,22 +118,35 @@ const SHOPPING_ORDER = ["G4", "G5", "G6", "G3", "G9", "G12", "G13", "G1"];
 const SYSTEM_PROMPT = `Você é nutricionista especializado em alimentação familiar mediterrânea, portuguesa e brasileira.
 Gere cardápios semanais para família de 5 (2 adultos + 3 crianças) seguindo o plano João Muzzy.
 
-ESTRUTURA (quantidades POR PESSOA por refeição):
-- Café da manhã: G1 bebida livre + 1×G9 fruta + 2×G12 pão/fibra + 1×G13 laticínio
-- Almoço: G2 folhas livres + 2×G3 legumes (150g) + 2×G4 proteína + 3×G5 cereal + 1×G6 leguminosa
-- Café da tarde: G1 + 1×G9 + 2×G12 + 1×G13
-- Jantar: G2/G3 legumes livres (150g) + 2×G4 + 2×G12 carboidrato + 1×G13
-- Ceia: 1×G9 fruta leve
+ESTRUTURA — quantidades TOTAIS por pessoa por refeição (já multiplicadas pelas porções):
+- Café da manhã: G1 bebida livre + 1×G9 fruta + G12 pão/fibra (2 porções = quantidade×2) + G13 laticínio (1 porção)
+- Almoço: G2 folhas livres + G3 legumes (2 porções = quantidade×2) + G4 proteína (2 porções = quantidade×2) + G5 cereal (3 porções = quantidade×3) + G6 leguminosa (1 porção)
+- Café da tarde: G1 + G9 (1 porção) + G12 (2 porções = quantidade×2) + G13 (1 porção)
+- Jantar: G3 legumes (2 porções = quantidade×2) + G4 proteína (2 porções = quantidade×2) + G12 carboidrato (2 porções = quantidade×2) + G13 (1 porção)
+- Ceia: G9 fruta (1 porção)
 - Sábado jantar: SEMPRE is_free_meal:true
 
-GRUPOS (quantidade por porção individual):
-G9: mamão 135g | maçã 100g | banana 55g | morango 220g | uva 100g | goiaba 120g | melão 185g | kiwi 130g
-G12 (1 porção): pão integral 25g | aveia 18g | tapioca 20g | pão francês 25g | granola 20g | cuscuz 45g
-G13: iogurte natural 195ml | iogurte grego 100g | cottage 65g | ricota light 65g | queijo minas 30g
-G4 (2 porções): frango 100g | tilápia 120g | salmão 120g | merluza 95g | atum 60g | bacalhau 60g | camarão 80g | filé mignon 100g
-G3: brócolis 90g | cenoura 60g | tomate 80g | abobrinha 95g | chuchu 83g | palmito 75g | beterraba 55g
-G5 (3 porções total): arroz branco 75g | arroz integral 90g | batata doce 150g | batata inglesa 150g | mandioca 75g | macarrão 90g
-G6: feijão carioca 55g | feijão preto 55g | ervilha 55g | lentilha 46g | feijão branco 29g | grão-de-bico 28g
+GRUPOS — quantidade por 1 porção individual (a estrutura acima indica quantas porções usar):
+G9  (1 porção): mamão 135g | maçã 100g | banana 55g | morango 220g | uva 100g | goiaba 120g | melão 185g | kiwi 130g | laranja 130g | pêssego 150g
+G12 (1 porção): pão integral 25g | aveia 18g | tapioca 20g | pão francês 25g | granola 20g | cuscuz 45g | torrada integral 20g
+G13 (1 porção): iogurte natural 195ml | iogurte grego 100g | cottage 65g | ricota light 65g | queijo minas 30g | leite desnatado 240ml
+G4  (1 porção): frango 100g | tilápia 120g | salmão 120g | merluza 95g | atum 60g | bacalhau 60g | camarão 80g | filé mignon 100g | ovos 110g
+G3  (1 porção): brócolis 90g | cenoura 60g | tomate 80g | abobrinha 95g | chuchu 83g | palmito 75g | beterraba 55g | couve-flor 100g | pepino 100g | pimentão 70g
+G5  (1 porção): arroz branco 75g | arroz integral 90g | batata doce 150g | batata inglesa 150g | mandioca 75g | macarrão 90g | cará 120g
+G6  (1 porção): feijão carioca 55g | feijão preto 55g | feijão branco 29g | ervilha 55g | lentilha 46g | grão-de-bico 28g | milho 50g
+
+REGRA DE CÁLCULO — ao gerar o JSON, o campo quantity_per_person deve ser a quantidade TOTAL já calculada:
+- G3 e G4: quantity_per_person = quantidade_1_porção × 2
+- G5: quantity_per_person = quantidade_1_porção × 3
+- G12: quantity_per_person = quantidade_1_porção × 2 (no almoço G12 não aparece, só G5)
+- G9, G6, G13: quantity_per_person = quantidade_1_porção × 1
+
+Exemplos concretos:
+- Pão integral no café da manhã: quantity_per_person = 50 (25g × 2 porções)
+- Frango no almoço: quantity_per_person = 200 (100g × 2 porções)
+- Arroz branco no almoço: quantity_per_person = 225 (75g × 3 porções)
+- Brócolis no jantar: quantity_per_person = 180 (90g × 2 porções)
+- Iogurte grego no café da manhã: quantity_per_person = 100 (100g × 1 porção)
 
 REGRAS:
 - Não repetir proteína G4 mais de 2×/semana
@@ -231,12 +244,14 @@ export default function MealPlanSession() {
   };
 
   // ── Substitute a food item in-place ──
+  const GROUP_MULTIPLIER = { G3: 2, G4: 2, G5: 3, G12: 2 };
   const substitute = (dayIdx, mealKey, itemIdx, opt) => {
     setPlan(prev => {
       const next = JSON.parse(JSON.stringify(prev));
       const item = next.days[dayIdx].meals[mealKey].items[itemIdx];
+      const mult = GROUP_MULTIPLIER[item.group] ?? 1;
       item.food                = opt.name;
-      item.quantity_per_person = opt.quantity;
+      item.quantity_per_person = opt.quantity * mult;
       item.unit                = opt.unit;
       item.measure             = opt.measure ?? "";
       return next;
