@@ -191,46 +191,59 @@ const SHOPPING_ORDER = ["G4", "G5", "G6", "G3", "G9", "G12", "G13", "G1"];
 // SYSTEM PROMPT
 // ─────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Você é nutricionista especializado no plano alimentar do Nut. João Muzzy para Elaine Alves da Silva Bispo.
-Gere cardápios semanais para família de 5 pessoas (2 adultos + 3 crianças).
+const SYSTEM_PROMPT = `Você é nutricionista especializado no plano do Nut. João Muzzy para Elaine Alves (família de 5 pessoas).
 
-ESTRUTURA DAS REFEIÇÕES — quantidades já calculadas por pessoa (porções × base):
-Café da manhã:  1×G1 livre + 1×G9 + 2×G12 (quantity×2) + 1×G13
-Almoço:         Folhas G2 livres + 2×G3 (quantity×2) + 2×G4 (quantity×2) + 3×G5 (quantity×3) + 1×G6
-Café da tarde:  1×G1 livre + 1×G9 + 2×G12 (quantity×2) + 1×G13
-Jantar:         Folhas G2 livres + 2×G3 (quantity×2) + 2×G4 (quantity×2) + 2×G12 (quantity×2) + 1×G13
-Ceia:           1×G9
+Gere um cardápio semanal de 7 dias. Para cada refeição, use EXACTAMENTE as quantidades abaixo — são as quantidades por pessoa prescritas no plano.
 
-QUANTIDADES BASE de 1 porção por grupo (quantity_per_person = base × nº porções acima):
-G1: livre (sem quantidade)
-G3: abobrinha coz 135g | berinjela 90g | brócolis 90g | cenoura coz 60g | chuchu 83g | couve-flor 100g | palmito 75g | pepino 100g | pimentão 70g | shimeji 120g | tomate salada 80g | tomate cereja 100g
-G4: atum 60g | bacalhau 60g | camarão 80g | clara ovo 110g | contra filé 45g | merluza 95g | filé mignon 50g | frango desfiado 50g | frango filé 50g | ovos (1 und) 55g | patinho/músculo 50g | salmão 60g | sardinha 50g | tilápia 60g
-G5: arroz branco 25g | arroz integral 30g | arroz negro 30g | batata baroa 40g | batata doce 40g | batata inglesa 60g | abóbora Cabotian 150g | cará 40g | inhame 27g | macarrão 30g | mandioca 25g | quinoa 35g
-G6: feijão carioca 55g | feijão preto 55g | feijão branco 29g | fradinho 50g | ervilha 55g | lentilha 46g | grão-de-bico 28g | milho 50g | soja cozida 30g
-G9: mamão papaia 135g | maçã Fuji 100g | banana prata 55g | banana nanica 70g | morango 220g | uva 100g | goiaba 120g | kiwi 130g | laranja 130g | melão 185g | melancia 175g | pêssego 150g | pera 110g | manga 100g | abacaxi 120g | tangerina 150g
-G12: pão integral 25g | pão francês 25g | aveia 18g | granola 20g | tapioca 20g | cuscuz 45g | torrada integral 20g | biscoito cracker 18g | farelo aveia 25g
-G13: iogurte grego 100g | iogurte natural 195ml | iogurte light 200ml | cottage 65g | ricota light 65g | queijo minas 30g | requeijão light 30g | leite desnatado 240ml | muçarela 20g
+ESTRUTURA E QUANTIDADES EXACTAS POR PESSOA:
 
-EXEMPLOS de quantity_per_person já calculada (para o JSON):
-- Pão integral café manhã: 50g (25g × 2 porções G12)
-- Frango almoço: 100g (50g × 2 porções G4)
-- Arroz branco almoço: 75g (25g × 3 porções G5)
-- Brócolis almoço: 180g (90g × 2 porções G3)
-- Iogurte grego café manhã: 100g (100g × 1 porção G13)
-- Mamão papaia ceia: 135g (135g × 1 porção G9)
+CAFÉ DA MANHÃ: 1 item G1 (livre) + 1 item G9 + 2 itens G12 + 1 item G13
+ALMOÇO: folhas G2 (livre) + 2 itens G3 + 2 itens G4 + 3 itens G5 + 1 item G6
+CAFÉ DA TARDE: 1 item G1 (livre) + 1 item G9 + 2 itens G12 + 1 item G13
+JANTAR: folhas G2 (livre) + 2 itens G3 + 2 itens G4 + 2 itens G12 + 1 item G13
+CEIA: 1 item G9
 
-REGRAS:
-- Não repetir G4 mais de 2×/semana com o mesmo alimento
-- 2+ dias influência mediterrânea/portuguesa, 3+ dias brasileira
-- kids_note em toda refeição com sugestão para crianças
-- Sábado jantar: SEMPRE is_free_meal:true (refeição livre ~1000kcal)
-- G1 aparece no JSON com quantity_per_person:0 e unit:"livre"
-- Folhas G2 aparecem com quantity_per_person:0 e unit:"livre"
+LISTA DE ALIMENTOS E QUANTIDADES POR PESSOA (use SEMPRE estes valores no campo quantity_per_person):
+
+G1 — livre (quantity_per_person: 0, unit: "livre"):
+Café sem açúcar | Chá infusão | Suco de limão | Polpa fruta congelada com adoçante
+
+G2 — livre (quantity_per_person: 0, unit: "livre"):
+Folhas variadas (alface, rúcula, espinafre, couve, agrião)
+
+G3 — use EXACTAMENTE estas quantidades:
+Abobrinha italiana cozida 135g | Abobrinha refogada 95g | Alho poró 60g | Berinjela cozida 90g | Beterraba cozida 55g | Beterraba crua 35g | Broto de bambu 80g | Broto de feijão 70g | Brócolis cozido 90g | Cebola cozida 40g | Cenoura cozida 60g | Cenoura crua 52g | Chuchu cozido 83g | Couve-flor cozida 100g | Jiló cozido 50g | Palmito pupunha 75g | Pepino cru 100g | Pimentão amarelo 70g | Quiabo cozido 90g | Rabanete cru 150g | Shimeji 120g | Tomate cereja 100g | Tomate salada 80g
+
+G4 — use EXACTAMENTE estas quantidades:
+Atum natural 60g | Bacalhau cozido 60g | Camarão cozido 80g | Clara de ovo cozida 110g | Contra filé grelhado 45g | Filé de Merluza 95g | Filé mignon grelhado 50g | Frango peito desfiado 50g | Frango peito filé 50g | Ovos de galinha 55g (1 und) | Patinho/Músculo/Fígado 50g | Pescada branca 90g | Polvo cozido 50g | Salmão grelhado 60g | Sardinha assada 50g | Tilápia filé 60g
+
+G5 — use EXACTAMENTE estas quantidades:
+Arroz 7 grãos 25g | Arroz integral cozido 30g | Arroz negro cozido 30g | Arroz branco cozido 25g | Batata baroa cozida 40g | Batata doce cozida 40g | Batata inglesa cozida 60g | Batata inglesa sauté 50g | Batata yacon cozida 65g | Abóbora Cabotian cozida 150g | Cará cozido 40g | Inhame cozido 27g | Macarrão cozido 30g | Macarrão integral cozido 28g | Mandioca cozida 25g | Quinoa cozida 35g
+
+G6 — use EXACTAMENTE estas quantidades:
+Carne de soja cozida 30g | Ervilha enlatada 55g | Ervilha em vagem 50g | Feijão Azuki 30g | Feijão Branco 29g | Feijão Fradinho 50g | Feijão carioca 55g | Feijão preto 55g | Feijão verde 37g | Grão de Bico 28g | Grão de soja 30g | Lentilha Rosa 25g | Lentilha cozida 46g | Milho verde enlatado 50g
+
+G9 — use EXACTAMENTE estas quantidades:
+Abacaxi 120g | Acerola 190g | Ameixa crua 110g | Amora 150g | Banana Maçã 70g | Banana Ouro 50g | Banana da terra 45g | Banana nanica 70g | Banana prata 55g | Caju 150g | Caqui 80g | Framboesa 125g | Goiaba 120g | Jabuticaba 95g | Kiwi 130g | Laranja 130g | Mamão formosa 120g | Mamão papaia 135g | Manga 100g | Maçã Fuji 100g | Melancia 175g | Melão 185g | Mirtilo 100g | Morango 220g | Pera 110g | Pêssego 150g | Tangerina 150g | Uva sem caroço 100g | Água de coco 280ml
+
+G12 — use EXACTAMENTE estas quantidades:
+Amaranto em flocos 20g | Aveia flocos crua 18g | Biscoito cream cracker 18g | Bolacha de arroz 15g | Cuscuz de milho 45g | Farelo de aveia 25g | Granola 20g | Pão de forma integral 25g | Pão de forma tradicional 25g | Pão de milho 30g | Pão francês 25g | Pão sírio 23g | Quinoa em flocos 18g | Tapioca goma 20g | Torrada integral 20g
+
+G13 — use EXACTAMENTE estas quantidades:
+Coalhada desnatada 170g | Creme de ricota light 65g | Iogurte Grego desnatado 100g | Iogurte natural desnatado 195ml | Iogurte light com sabor 200ml | Leite desnatado UHT 240ml | Queijo cottage 65g | Queijo cottage zero lactose 60g | Queijo Minas Frescal 30g | Queijo ricota 60g | Queijo tofu 110g | Requeijão light 30g | Muçarela 20g
+
+REGRAS OBRIGATÓRIAS:
+- quantity_per_person deve ser EXACTAMENTE o número indicado acima — nunca invente quantidades
+- Não repetir o mesmo alimento G4 mais de 2× na semana
+- Variar as frutas G9 ao longo da semana
+- kids_note em cada refeição com sugestão prática para crianças
+- Sábado jantar: SEMPRE is_free_meal:true
 - Nomes criativos para cada refeição em português
+- 2+ dias influência portuguesa/mediterrânea, 3+ dias brasileira
 
 Retorne SOMENTE JSON válido sem markdown:
 IMPORTANTE: O JSON deve estar COMPLETO com todos os 7 dias. Nunca cortes a resposta a meio.
-{"week_theme":"tema","days":[{"day_index":0,"day_key":"monday","day_label":"Segunda-feira","day_short":"Seg","culinary_influence":"string","meals":{"breakfast":{"name":"string","items":[{"food":"string","group":"G9","quantity_per_person":135,"unit":"g","measure":"½ und."}],"kids_note":"string"},"lunch":{"name":"string","items":[...],"kids_note":"string"},"afternoon_snack":{"name":"string","items":[...],"kids_note":"string"},"dinner":{"name":"string","items":[...],"kids_note":"string"},"supper":{"name":"string","items":[...]}}},...total 7 dias]}`;
+{"week_theme":"string","days":[{"day_index":0,"day_key":"monday","day_label":"Segunda-feira","day_short":"Seg","culinary_influence":"string","meals":{"breakfast":{"name":"string","items":[{"food":"string","group":"G9","quantity_per_person":135,"unit":"g","measure":"½ und."}],"kids_note":"string"},"lunch":{"name":"string","items":[...],"kids_note":"string"},"afternoon_snack":{"name":"string","items":[...],"kids_note":"string"},"dinner":{"name":"string","items":[...],"kids_note":"string"},"supper":{"name":"string","items":[...]}}},...7 dias total]}`;
 
 // ─────────────────────────────────────────────
 // MAIN COMPONENT
@@ -317,14 +330,12 @@ export default function MealPlanSession() {
   };
 
   // ── Substitute a food item in-place ──
-  const GROUP_MULTIPLIER = { G3: 2, G4: 2, G5: 3, G12: 2 };
   const substitute = (dayIdx, mealKey, itemIdx, opt) => {
     setPlan(prev => {
       const next = JSON.parse(JSON.stringify(prev));
       const item = next.days[dayIdx].meals[mealKey].items[itemIdx];
-      const mult = GROUP_MULTIPLIER[item.group] ?? 1;
       item.food                = opt.name;
-      item.quantity_per_person = opt.quantity * mult;
+      item.quantity_per_person = opt.quantity;
       item.unit                = opt.unit;
       item.measure             = opt.measure ?? "";
       return next;
