@@ -24,80 +24,156 @@ const GROUPS_META = {
 };
 
 const SUBSTITUTIONS = {
-  G9: [
-    { name: "Mamão papaia",    quantity: 135, unit: "g",  measure: "½ und."    },
-    { name: "Maçã fuji",       quantity: 100, unit: "g",  measure: "1 und."    },
-    { name: "Banana prata",    quantity: 55,  unit: "g",  measure: "1 und."    },
-    { name: "Morango",         quantity: 220, unit: "g",  measure: "10 und."   },
-    { name: "Uva sem caroço",  quantity: 100, unit: "g"                        },
-    { name: "Goiaba",          quantity: 120, unit: "g",  measure: "1 und."    },
-    { name: "Melão",           quantity: 185, unit: "g",  measure: "2 fatias"  },
-    { name: "Melancia",        quantity: 175, unit: "g",  measure: "1 fatia"   },
-    { name: "Kiwi",            quantity: 130, unit: "g",  measure: "2 und."    },
-    { name: "Laranja",         quantity: 130, unit: "g",  measure: "1 und."    },
-    { name: "Pêssego",         quantity: 150, unit: "g",  measure: "2½ und."   },
-  ],
-  G12: [
-    { name: "Pão de forma integral", quantity: 25, unit: "g", measure: "1 fatia"     },
-    { name: "Aveia em flocos crua",  quantity: 18, unit: "g", measure: "1 col. sopa" },
-    { name: "Tapioca goma",          quantity: 20, unit: "g", measure: "1 col. sopa" },
-    { name: "Pão francês",           quantity: 25, unit: "g", measure: "½ unid."     },
-    { name: "Pão de milho",          quantity: 30, unit: "g", measure: "1 und."      },
-    { name: "Granola",               quantity: 20, unit: "g", measure: "1 col. sopa" },
-    { name: "Cuscuz de milho",       quantity: 45, unit: "g", measure: "3 col. sopa" },
-    { name: "Torrada integral",      quantity: 20, unit: "g", measure: "3 und."      },
-  ],
-  G13: [
-    { name: "Iogurte natural desnatado", quantity: 195, unit: "ml"                        },
-    { name: "Iogurte grego desnatado",   quantity: 100, unit: "g"                         },
-    { name: "Queijo cottage",            quantity: 65,  unit: "g", measure: "2 col. sopa" },
-    { name: "Creme de ricota light",     quantity: 65,  unit: "g", measure: "3 col. sopa" },
-    { name: "Queijo minas frescal",      quantity: 30,  unit: "g"                         },
-    { name: "Leite desnatado",           quantity: 240, unit: "ml"                        },
-    { name: "Requeijão light",           quantity: 30,  unit: "g"                         },
+  G3: [
+    { name: "Abobrinha italiana cozida",   quantity: 135, unit: "g",  measure: "2 col. A."      },
+    { name: "Abobrinha italiana refogada", quantity: 95,  unit: "g",  measure: "1 escumadeira"   },
+    { name: "Alho poró",                   quantity: 60,  unit: "g",  measure: "10 rodelas"      },
+    { name: "Berinjela cozida",            quantity: 90,  unit: "g",  measure: "4 col. sopa"     },
+    { name: "Beterraba cozida",            quantity: 55,  unit: "g",  measure: "2 fatias G."     },
+    { name: "Beterraba crua",              quantity: 35,  unit: "g",  measure: "3 col. sopa"     },
+    { name: "Broto de bambu",              quantity: 80,  unit: "g",  measure: "1 porção"        },
+    { name: "Broto de feijão",             quantity: 70,  unit: "g",  measure: "2 col. serv."    },
+    { name: "Brócolis cozido",             quantity: 90,  unit: "g",  measure: "1 xícara"        },
+    { name: "Cebola cozida",               quantity: 40,  unit: "g",  measure: "4 col. sopa"     },
+    { name: "Cenoura cozida",              quantity: 60,  unit: "g",  measure: "3 col. sopa"     },
+    { name: "Cenoura crua",                quantity: 52,  unit: "g",  measure: "4 col. sopa"     },
+    { name: "Chuchu cozido",               quantity: 83,  unit: "g",  measure: "4 col. sopa"     },
+    { name: "Couve-flor cozida",           quantity: 100, unit: "g",  measure: "1 escumadeira"   },
+    { name: "Jiló cozido",                 quantity: 50,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Palmito pupunha conserva",    quantity: 75,  unit: "g",  measure: "5 col. sopa"     },
+    { name: "Pepino cru",                  quantity: 100, unit: "g",  measure: "½ und. G."       },
+    { name: "Pimentão amarelo cru",        quantity: 70,  unit: "g",  measure: "1 und. G."       },
+    { name: "Quiabo cozido",               quantity: 90,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Rabanete cru",                quantity: 150, unit: "g",  measure: "4 und. G."       },
+    { name: "Shimeji",                     quantity: 120, unit: "g",  measure: "3 col. sopa"     },
+    { name: "Tomate cereja",               quantity: 100, unit: "g",  measure: "½ xíc. chá"      },
+    { name: "Tomate salada",               quantity: 80,  unit: "g",  measure: "3 fatias G."     },
   ],
   G4: [
-    { name: "Frango peito grelhado",  quantity: 100, unit: "g", measure: "2 bifes"   },
-    { name: "Tilápia assada",         quantity: 120, unit: "g", measure: "2 filés"   },
-    { name: "Salmão grelhado",        quantity: 120, unit: "g", measure: "2 filés"   },
-    { name: "Filé de merluza",        quantity: 95,  unit: "g", measure: "1 filé"    },
-    { name: "Atum natural",           quantity: 60,  unit: "g", measure: "3 col. sopa" },
-    { name: "Bacalhau cozido",        quantity: 60,  unit: "g", measure: "1 pedaço"  },
-    { name: "Camarão grelhado",       quantity: 80,  unit: "g", measure: "10 und."   },
-    { name: "Filé mignon grelhado",   quantity: 100, unit: "g", measure: "2 bifes"   },
-    { name: "Ovos (2 unidades)",      quantity: 110, unit: "g", measure: "2 und."    },
-  ],
-  G3: [
-    { name: "Brócolis cozido",      quantity: 90,  unit: "g" },
-    { name: "Cenoura cozida",       quantity: 60,  unit: "g" },
-    { name: "Tomate cereja",        quantity: 100, unit: "g" },
-    { name: "Abobrinha refogada",   quantity: 95,  unit: "g" },
-    { name: "Chuchu cozido",        quantity: 83,  unit: "g" },
-    { name: "Palmito em conserva",  quantity: 75,  unit: "g" },
-    { name: "Beterraba cozida",     quantity: 55,  unit: "g" },
-    { name: "Couve-flor cozida",    quantity: 100, unit: "g" },
-    { name: "Pepino cru",           quantity: 100, unit: "g" },
-    { name: "Pimentão amarelo",     quantity: 70,  unit: "g" },
-    { name: "Shimeji",              quantity: 120, unit: "g" },
+    { name: "Atum natural",                quantity: 60,  unit: "g",  measure: "3 col. sopa"     },
+    { name: "Bacalhau cozido",             quantity: 60,  unit: "g",  measure: "1 ped. P."       },
+    { name: "Camarão cozido",              quantity: 80,  unit: "g",  measure: "10 und."         },
+    { name: "Clara de ovo cozida",         quantity: 110, unit: "g",  measure: "4 und."          },
+    { name: "Contra filé grelhado",        quantity: 45,  unit: "g",  measure: "1 bife P."       },
+    { name: "Filé de Merluza",             quantity: 95,  unit: "g",  measure: "1 filé P."       },
+    { name: "Filé mignon grelhado",        quantity: 50,  unit: "g",  measure: "1 bife P."       },
+    { name: "Frango peito desfiado",       quantity: 50,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Frango peito filé",           quantity: 50,  unit: "g",  measure: "1 bife P."       },
+    { name: "Ovos de galinha",             quantity: 55,  unit: "g",  measure: "1 und."          },
+    { name: "Patinho / Músculo / Fígado",  quantity: 50,  unit: "g",  measure: "1 bife P."       },
+    { name: "Pescada branca crua",         quantity: 90,  unit: "g",  measure: "1 filé P."       },
+    { name: "Polvo cozido",                quantity: 50,  unit: "g",  measure: "1 esc. M."       },
+    { name: "Salmão grelhado",             quantity: 60,  unit: "g",  measure: "1 filé P."       },
+    { name: "Sardinha assada",             quantity: 50,  unit: "g",  measure: "2 und."          },
+    { name: "Tilápia filé",                quantity: 60,  unit: "g",  measure: "1 filé P."       },
   ],
   G5: [
-    { name: "Arroz branco cozido",   quantity: 75,  unit: "g", measure: "3 col. sopa" },
-    { name: "Arroz integral cozido", quantity: 90,  unit: "g", measure: "3 col. sopa" },
-    { name: "Batata doce cozida",    quantity: 150, unit: "g", measure: "4 fatias"    },
-    { name: "Batata inglesa cozida", quantity: 150, unit: "g", measure: "4 col. sopa" },
-    { name: "Mandioca cozida",       quantity: 75,  unit: "g", measure: "3 col. sopa" },
-    { name: "Macarrão cozido",       quantity: 90,  unit: "g", measure: "3 col. sopa" },
-    { name: "Cará cozido",           quantity: 120, unit: "g", measure: "3 col. sopa" },
+    { name: "Arroz 7 grãos",               quantity: 25,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Arroz integral cozido",       quantity: 30,  unit: "g",  measure: "1½ col. sopa"    },
+    { name: "Arroz negro cozido",          quantity: 30,  unit: "g",  measure: "1 col. sopa CH"  },
+    { name: "Arroz branco cozido",         quantity: 25,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Batata baroa cozida",         quantity: 40,  unit: "g",  measure: "1½ col. sopa"    },
+    { name: "Batata doce cozida",          quantity: 40,  unit: "g",  measure: "1 fatia P."      },
+    { name: "Batata inglesa cozida",       quantity: 60,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Batata inglesa sauté",        quantity: 50,  unit: "g",  measure: "2 col. sopa CH"  },
+    { name: "Batata yacon cozida",         quantity: 65,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Abóbora Cabotian cozida",     quantity: 150, unit: "g",  measure: "4 col. sopa"     },
+    { name: "Cará cozido",                 quantity: 40,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Inhame cozido",               quantity: 27,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Macarrão cozido",             quantity: 30,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Macarrão de arroz cozido",    quantity: 30,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Macarrão integral cozido",    quantity: 28,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Mandioca cozida",             quantity: 25,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Quinoa cozida",               quantity: 35,  unit: "g",  measure: "1 col. sopa"     },
   ],
   G6: [
-    { name: "Feijão carioca",       quantity: 55, unit: "g" },
-    { name: "Feijão preto",         quantity: 55, unit: "g" },
-    { name: "Feijão branco",        quantity: 29, unit: "g" },
-    { name: "Feijão fradinho",      quantity: 50, unit: "g" },
-    { name: "Ervilha enlatada",     quantity: 55, unit: "g" },
-    { name: "Lentilha cozida",      quantity: 46, unit: "g" },
-    { name: "Grão-de-bico cozido",  quantity: 28, unit: "g" },
-    { name: "Milho verde enlatado", quantity: 50, unit: "g" },
+    { name: "Carne de soja cozida",        quantity: 30,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Ervilha enlatada",            quantity: 55,  unit: "g",  measure: "2 col. sopa CH"  },
+    { name: "Ervilha em vagem",            quantity: 50,  unit: "g",  measure: "2 col. sopa CH"  },
+    { name: "Feijão Azuki cozido",         quantity: 30,  unit: "g",  measure: "1 col. CH"       },
+    { name: "Feijão Branco cozido",        quantity: 29,  unit: "g",  measure: "1 col. CH"       },
+    { name: "Feijão Fradinho cozido",      quantity: 50,  unit: "g",  measure: "½ concha M."     },
+    { name: "Feijão carioca",              quantity: 55,  unit: "g",  measure: "1 concha P. CH"  },
+    { name: "Feijão preto",                quantity: 55,  unit: "g",  measure: "1 concha CH"     },
+    { name: "Feijão verde",                quantity: 37,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Grão de Bico cozido",         quantity: 28,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Grão de soja cozido",         quantity: 30,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Lentilha Rosa",               quantity: 25,  unit: "g",  measure: "1 col. sopa CH"  },
+    { name: "Lentilha cozida",             quantity: 46,  unit: "g",  measure: "1 concha CH"     },
+    { name: "Milho verde enlatado",        quantity: 50,  unit: "g",  measure: "2 col. sopa"     },
+  ],
+  G9: [
+    { name: "Abacaxi",                     quantity: 120, unit: "g",  measure: "2 fatias P."     },
+    { name: "Acerola",                     quantity: 190, unit: "g",  measure: "10 und."         },
+    { name: "Ameixa crua",                 quantity: 110, unit: "g",  measure: "2 und."          },
+    { name: "Ameixa seca",                 quantity: 24,  unit: "g",  measure: "5 und. M."       },
+    { name: "Amora",                       quantity: 150, unit: "g",  measure: "7 col. sopa CH"  },
+    { name: "Banana Maçã",                 quantity: 70,  unit: "g",  measure: "1 und. M."       },
+    { name: "Banana Ouro",                 quantity: 50,  unit: "g",  measure: "1 und. P."       },
+    { name: "Banana da terra",             quantity: 45,  unit: "g",  measure: "½ und."          },
+    { name: "Banana nanica",               quantity: 70,  unit: "g",  measure: "1 und. M."       },
+    { name: "Banana prata",                quantity: 55,  unit: "g",  measure: "1 und."          },
+    { name: "Caju",                        quantity: 150, unit: "g",  measure: "1 und."          },
+    { name: "Caqui",                       quantity: 80,  unit: "g",  measure: "1 und."          },
+    { name: "Carambola",                   quantity: 130, unit: "g",  measure: "1 und."          },
+    { name: "Cereja",                      quantity: 100, unit: "g",  measure: "14 und. P."      },
+    { name: "Damasco desidratado",         quantity: 18,  unit: "g",  measure: "2 und. M."       },
+    { name: "Figo",                        quantity: 80,  unit: "g",  measure: "2 und. M."       },
+    { name: "Framboesa",                   quantity: 125, unit: "g",  measure: "1 xíc. chá"      },
+    { name: "Goiaba",                      quantity: 120, unit: "g",  measure: "1 und."          },
+    { name: "Jabuticaba",                  quantity: 95,  unit: "g",  measure: "18 und. M."      },
+    { name: "Jaca",                        quantity: 65,  unit: "g",  measure: "5 bagos"         },
+    { name: "Kiwi",                        quantity: 130, unit: "g",  measure: "2 und."          },
+    { name: "Laranja",                     quantity: 130, unit: "g",  measure: "1 und."          },
+    { name: "Mamão formosa",               quantity: 120, unit: "g",  measure: "1 fatia M."      },
+    { name: "Mamão papaia",                quantity: 135, unit: "g",  measure: "½ und. P."       },
+    { name: "Manga",                       quantity: 100, unit: "g",  measure: "1 und. P."       },
+    { name: "Maracujá",                    quantity: 120, unit: "g",  measure: "1 und. G."       },
+    { name: "Maçã Fuji",                   quantity: 100, unit: "g",  measure: "1 und. P."       },
+    { name: "Melancia",                    quantity: 175, unit: "g",  measure: "1 fatia M."      },
+    { name: "Melão",                       quantity: 185, unit: "g",  measure: "2 fatias M."     },
+    { name: "Mirtilo / Blueberry",         quantity: 100, unit: "g",  measure: "25 und."         },
+    { name: "Morango",                     quantity: 220, unit: "g",  measure: "10 und."         },
+    { name: "Nectarina",                   quantity: 140, unit: "g",  measure: "1 und. G."       },
+    { name: "Pera",                        quantity: 110, unit: "g",  measure: "1 und. M."       },
+    { name: "Pêssego",                     quantity: 150, unit: "g",  measure: "2½ und. P."      },
+    { name: "Romã",                        quantity: 100, unit: "g",  measure: "1 und. P."       },
+    { name: "Tangerina",                   quantity: 150, unit: "g",  measure: "1 und. M."       },
+    { name: "Uva sem caroço",              quantity: 100, unit: "g",  measure: "1 cacho P."      },
+    { name: "Uva passa",                   quantity: 19,  unit: "g",  measure: "1 col. sopa CH"  },
+    { name: "Água de coco",                quantity: 280, unit: "ml", measure: "1 copo D. CH"    },
+  ],
+  G12: [
+    { name: "Amaranto em flocos",          quantity: 20,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Aveia flocos crua",           quantity: 18,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Biscoito cream cracker",      quantity: 18,  unit: "g",  measure: "3 unid."         },
+    { name: "Bolacha de arroz",            quantity: 15,  unit: "g",  measure: "2 und. M."       },
+    { name: "Cuscuz de milho",             quantity: 45,  unit: "g",  measure: "3 col. sopa CH"  },
+    { name: "Farelo de aveia",             quantity: 25,  unit: "g",  measure: "1 col. sopa CH"  },
+    { name: "Granola",                     quantity: 20,  unit: "g",  measure: "1 col. sopa CH"  },
+    { name: "Pão de forma integral",       quantity: 25,  unit: "g",  measure: "1 fatia"         },
+    { name: "Pão de forma tradicional",    quantity: 25,  unit: "g",  measure: "1 fatia"         },
+    { name: "Pão de milho",                quantity: 30,  unit: "g",  measure: "1 und. M."       },
+    { name: "Pão francês",                 quantity: 25,  unit: "g",  measure: "½ unid."         },
+    { name: "Pão sírio / pita",            quantity: 23,  unit: "g",  measure: "½ und. M."       },
+    { name: "Quinoa em flocos",            quantity: 18,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Tapioca goma",                quantity: 20,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Torrada integral",            quantity: 20,  unit: "g",  measure: "3 und."          },
+  ],
+  G13: [
+    { name: "Coalhada desnatada",          quantity: 170, unit: "g",  measure: "1 unid."         },
+    { name: "Creme de ricota light",       quantity: 65,  unit: "g",  measure: "3 col. sopa"     },
+    { name: "Iogurte Grego desnatado",     quantity: 100, unit: "g",  measure: "1 unid."         },
+    { name: "Iogurte natural desnatado",   quantity: 195, unit: "ml", measure: "1 und."          },
+    { name: "Iogurte light com sabor",     quantity: 200, unit: "ml", measure: "até 70 kcal"     },
+    { name: "Leite desnatado UHT",         quantity: 240, unit: "ml", measure: "1 copo D. CH"    },
+    { name: "Queijo cottage",              quantity: 65,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Queijo cottage zero lactose", quantity: 60,  unit: "g",  measure: "2 col. sopa"     },
+    { name: "Queijo Minas Frescal",        quantity: 30,  unit: "g",  measure: "1 fatia"         },
+    { name: "Queijo ricota",               quantity: 60,  unit: "g",  measure: "2 fatias M."     },
+    { name: "Queijo tofu",                 quantity: 110, unit: "g",  measure: "1 und."          },
+    { name: "Requeijão light",             quantity: 30,  unit: "g",  measure: "1 col. sopa"     },
+    { name: "Muçarela",                    quantity: 20,  unit: "g",  measure: "1 fatia"         },
   ],
 };
 
@@ -115,49 +191,46 @@ const SHOPPING_ORDER = ["G4", "G5", "G6", "G3", "G9", "G12", "G13", "G1"];
 // SYSTEM PROMPT
 // ─────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Você é nutricionista especializado em alimentação familiar mediterrânea, portuguesa e brasileira.
-Gere cardápios semanais para família de 5 (2 adultos + 3 crianças) seguindo o plano João Muzzy.
+const SYSTEM_PROMPT = `Você é nutricionista especializado no plano alimentar do Nut. João Muzzy para Elaine Alves da Silva Bispo.
+Gere cardápios semanais para família de 5 pessoas (2 adultos + 3 crianças).
 
-ESTRUTURA — quantidades TOTAIS por pessoa por refeição (já multiplicadas pelas porções):
-- Café da manhã: G1 bebida livre + 1×G9 fruta + G12 pão/fibra (2 porções = quantidade×2) + G13 laticínio (1 porção)
-- Almoço: G2 folhas livres + G3 legumes (2 porções = quantidade×2) + G4 proteína (2 porções = quantidade×2) + G5 cereal (3 porções = quantidade×3) + G6 leguminosa (1 porção)
-- Café da tarde: G1 + G9 (1 porção) + G12 (2 porções = quantidade×2) + G13 (1 porção)
-- Jantar: G3 legumes (2 porções = quantidade×2) + G4 proteína (2 porções = quantidade×2) + G12 carboidrato (2 porções = quantidade×2) + G13 (1 porção)
-- Ceia: G9 fruta (1 porção)
-- Sábado jantar: SEMPRE is_free_meal:true
+ESTRUTURA DAS REFEIÇÕES — quantidades já calculadas por pessoa (porções × base):
+Café da manhã:  1×G1 livre + 1×G9 + 2×G12 (quantity×2) + 1×G13
+Almoço:         Folhas G2 livres + 2×G3 (quantity×2) + 2×G4 (quantity×2) + 3×G5 (quantity×3) + 1×G6
+Café da tarde:  1×G1 livre + 1×G9 + 2×G12 (quantity×2) + 1×G13
+Jantar:         Folhas G2 livres + 2×G3 (quantity×2) + 2×G4 (quantity×2) + 2×G12 (quantity×2) + 1×G13
+Ceia:           1×G9
 
-GRUPOS — quantidade por 1 porção individual (a estrutura acima indica quantas porções usar):
-G9  (1 porção): mamão 135g | maçã 100g | banana 55g | morango 220g | uva 100g | goiaba 120g | melão 185g | kiwi 130g | laranja 130g | pêssego 150g
-G12 (1 porção): pão integral 25g | aveia 18g | tapioca 20g | pão francês 25g | granola 20g | cuscuz 45g | torrada integral 20g
-G13 (1 porção): iogurte natural 195ml | iogurte grego 100g | cottage 65g | ricota light 65g | queijo minas 30g | leite desnatado 240ml
-G4  (1 porção): frango 100g | tilápia 120g | salmão 120g | merluza 95g | atum 60g | bacalhau 60g | camarão 80g | filé mignon 100g | ovos 110g
-G3  (1 porção): brócolis 90g | cenoura 60g | tomate 80g | abobrinha 95g | chuchu 83g | palmito 75g | beterraba 55g | couve-flor 100g | pepino 100g | pimentão 70g
-G5  (1 porção): arroz branco 75g | arroz integral 90g | batata doce 150g | batata inglesa 150g | mandioca 75g | macarrão 90g | cará 120g
-G6  (1 porção): feijão carioca 55g | feijão preto 55g | feijão branco 29g | ervilha 55g | lentilha 46g | grão-de-bico 28g | milho 50g
+QUANTIDADES BASE de 1 porção por grupo (quantity_per_person = base × nº porções acima):
+G1: livre (sem quantidade)
+G3: abobrinha coz 135g | berinjela 90g | brócolis 90g | cenoura coz 60g | chuchu 83g | couve-flor 100g | palmito 75g | pepino 100g | pimentão 70g | shimeji 120g | tomate salada 80g | tomate cereja 100g
+G4: atum 60g | bacalhau 60g | camarão 80g | clara ovo 110g | contra filé 45g | merluza 95g | filé mignon 50g | frango desfiado 50g | frango filé 50g | ovos (1 und) 55g | patinho/músculo 50g | salmão 60g | sardinha 50g | tilápia 60g
+G5: arroz branco 25g | arroz integral 30g | arroz negro 30g | batata baroa 40g | batata doce 40g | batata inglesa 60g | abóbora Cabotian 150g | cará 40g | inhame 27g | macarrão 30g | mandioca 25g | quinoa 35g
+G6: feijão carioca 55g | feijão preto 55g | feijão branco 29g | fradinho 50g | ervilha 55g | lentilha 46g | grão-de-bico 28g | milho 50g | soja cozida 30g
+G9: mamão papaia 135g | maçã Fuji 100g | banana prata 55g | banana nanica 70g | morango 220g | uva 100g | goiaba 120g | kiwi 130g | laranja 130g | melão 185g | melancia 175g | pêssego 150g | pera 110g | manga 100g | abacaxi 120g | tangerina 150g
+G12: pão integral 25g | pão francês 25g | aveia 18g | granola 20g | tapioca 20g | cuscuz 45g | torrada integral 20g | biscoito cracker 18g | farelo aveia 25g
+G13: iogurte grego 100g | iogurte natural 195ml | iogurte light 200ml | cottage 65g | ricota light 65g | queijo minas 30g | requeijão light 30g | leite desnatado 240ml | muçarela 20g
 
-REGRA DE CÁLCULO — ao gerar o JSON, o campo quantity_per_person deve ser a quantidade TOTAL já calculada:
-- G3 e G4: quantity_per_person = quantidade_1_porção × 2
-- G5: quantity_per_person = quantidade_1_porção × 3
-- G12: quantity_per_person = quantidade_1_porção × 2 (no almoço G12 não aparece, só G5)
-- G9, G6, G13: quantity_per_person = quantidade_1_porção × 1
-
-Exemplos concretos:
-- Pão integral no café da manhã: quantity_per_person = 50 (25g × 2 porções)
-- Frango no almoço: quantity_per_person = 200 (100g × 2 porções)
-- Arroz branco no almoço: quantity_per_person = 225 (75g × 3 porções)
-- Brócolis no jantar: quantity_per_person = 180 (90g × 2 porções)
-- Iogurte grego no café da manhã: quantity_per_person = 100 (100g × 1 porção)
+EXEMPLOS de quantity_per_person já calculada (para o JSON):
+- Pão integral café manhã: 50g (25g × 2 porções G12)
+- Frango almoço: 100g (50g × 2 porções G4)
+- Arroz branco almoço: 75g (25g × 3 porções G5)
+- Brócolis almoço: 180g (90g × 2 porções G3)
+- Iogurte grego café manhã: 100g (100g × 1 porção G13)
+- Mamão papaia ceia: 135g (135g × 1 porção G9)
 
 REGRAS:
-- Não repetir proteína G4 mais de 2×/semana
-- 2+ dias mediterrâneos, 2+ dias portuguesa, 3 dias brasileira
-- kids_note em toda refeição
-- Nomes criativos em português
-- Varie as frutas G9 ao longo da semana
+- Não repetir G4 mais de 2×/semana com o mesmo alimento
+- 2+ dias influência mediterrânea/portuguesa, 3+ dias brasileira
+- kids_note em toda refeição com sugestão para crianças
+- Sábado jantar: SEMPRE is_free_meal:true (refeição livre ~1000kcal)
+- G1 aparece no JSON com quantity_per_person:0 e unit:"livre"
+- Folhas G2 aparecem com quantity_per_person:0 e unit:"livre"
+- Nomes criativos para cada refeição em português
 
 Retorne SOMENTE JSON válido sem markdown:
 IMPORTANTE: O JSON deve estar COMPLETO com todos os 7 dias. Nunca cortes a resposta a meio.
-{"week_theme":"tema","days":[{"day_index":0,"day_key":"monday","day_label":"Segunda-feira","day_short":"Seg","culinary_influence":"Base brasileira","meals":{"breakfast":{"name":"nome","items":[{"food":"nome","group":"G9","quantity_per_person":135,"unit":"g","measure":"½ und."}],"kids_note":"dica"},"lunch":{"name":"...","items":[...],"kids_note":"..."},"afternoon_snack":{"name":"...","items":[...],"kids_note":"..."},"dinner":{"name":"...","items":[...],"kids_note":"..."},"supper":{"name":"...","items":[...]}}},...7 dias total]}`;
+{"week_theme":"tema","days":[{"day_index":0,"day_key":"monday","day_label":"Segunda-feira","day_short":"Seg","culinary_influence":"string","meals":{"breakfast":{"name":"string","items":[{"food":"string","group":"G9","quantity_per_person":135,"unit":"g","measure":"½ und."}],"kids_note":"string"},"lunch":{"name":"string","items":[...],"kids_note":"string"},"afternoon_snack":{"name":"string","items":[...],"kids_note":"string"},"dinner":{"name":"string","items":[...],"kids_note":"string"},"supper":{"name":"string","items":[...]}}},...total 7 dias]}`;
 
 // ─────────────────────────────────────────────
 // MAIN COMPONENT
