@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import MealPlanSession from "./components/MealPlanSession.jsx";
 
 // ═══════════════════════════════════════════════════════════════════
 //  DESIGN TOKENS — NutriTrack visual
@@ -2892,7 +2893,9 @@ export default function App(){
           rewards={rewards} onFreeMeal={handleFreeMeal}/>
       )}
       {tab==="cardapio"&&cardapioTab==="cardapio"&&(
-        <CardapioSemanalTab weekPlan={weekPlan} onSelectWeek={handleSelectWeek}/>
+        <div style={{padding:"0 16px 80px"}}>
+          <MealPlanSession/>
+        </div>
       )}
       {tab==="cardapio"&&cardapioTab==="receitas"&&(
         <RecipesTab/>
