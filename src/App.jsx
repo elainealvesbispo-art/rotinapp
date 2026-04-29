@@ -2820,23 +2820,38 @@ export default function App(){
         <AlarmModal alarm={alarm} onSave={saveAlarm} onClose={()=>setShowAlarmModal(false)}/>
       )}
 
-      {/* NAV INFERIOR — NutriTrack style */}
-      <nav style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",
+      {/* NAV INFERIOR — com ícones e safe area */}
+      <nav style={{
+        position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",
         width:"100%",maxWidth:440,background:"#fff",
-        borderTop:`1px solid ${S[100]}`,
-        display:"flex",zIndex:50,boxShadow:"0 -2px 16px rgba(0,0,0,0.06)",
-        minHeight:60,paddingBottom:"env(safe-area-inset-bottom, 16px)"}}>
+        borderTop:"1px solid #f1f5f9",
+        display:"flex",zIndex:50,
+        boxShadow:"0 -2px 16px rgba(0,0,0,0.06)",
+        paddingBottom:"env(safe-area-inset-bottom, 0px)",
+      }}>
         {TABS.map(t=>{
           const isSel=tab===t.id;
+          const icons={rotina:"📅",cardapio:"🥗",limpeza:"🧹",gastos:"💰",saude:"🌸",estudo:"📖"};
           return(
             <button key={t.id} onClick={()=>setTab(t.id)} style={{
               flex:1,display:"flex",flexDirection:"column",alignItems:"center",
-              gap:3,padding:"12px 4px 14px",background:"none",border:"none",cursor:"pointer",
+              justifyContent:"center",gap:5,padding:"12px 4px",minHeight:68,
+              background:"none",border:"none",cursor:"pointer",
+              WebkitTapHighlightColor:"transparent",
             }}>
-              <div style={{width:4,height:4,borderRadius:99,
-                background:isSel?E[500]:"transparent",marginBottom:2}}/>
-              <span style={{fontSize:13,fontWeight:isSel?700:500,
-                color:isSel?E[600]:S[400],transition:"color 0.2s"}}>{t.label}</span>
+              <div style={{
+                width:isSel?36:32,height:isSel?36:32,borderRadius:10,
+                background:isSel?"#16a34a":"transparent",
+                border:isSel?"none":"1px solid #e2e8f0",
+                display:"flex",alignItems:"center",justifyContent:"center",
+                fontSize:18,transition:"all 0.2s",
+              }}>
+                {icons[t.id]}
+              </div>
+              <span style={{
+                fontSize:10,fontWeight:isSel?700:500,
+                color:isSel?"#16a34a":"#94a3b8",
+              }}>{t.label}</span>
             </button>
           );
         })}
