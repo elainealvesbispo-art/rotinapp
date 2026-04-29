@@ -176,11 +176,19 @@ export default function MealPlanSession() {
     setOpenSub(null);
 
     try {
+      const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+
+      if (!apiKey) {
+        setError("Chave da API não encontrada. Verifica o ficheiro .env (VITE_ANTHROPIC_API_KEY).");
+        setLoading(false);
+        return;
+      }
+
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY ?? "",
+          "x-api-key": apiKey,
           "anthropic-version": "2023-06-01",
           "anthropic-dangerous-direct-browser-access": "true",
         },
@@ -199,6 +207,13 @@ export default function MealPlanSession() {
         }),
       });
 
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        setError(`Erro da API: ${res.status} — ${errData?.error?.message ?? "sem detalhes"}`);
+        setLoading(false);
+        return;
+      }
+
       const data = await res.json();
       const raw  = data.content?.find(b => b.type === "text")?.text ?? "";
       const json = JSON.parse(raw.replace(/```json|```/g, "").trim());
@@ -206,8 +221,9 @@ export default function MealPlanSession() {
       setPlan(json);
       setWeekCount(c => c + 1);
       setSelectedDay(0);
-    } catch {
-      setError("Não foi possível gerar o cardápio. Verifique a conexão e tente novamente.");
+
+    } catch (e) {
+      setError(`Erro: ${e.message ?? "Não foi possível gerar o cardápio. Verifique a conexão."}`);
     }
 
     setLoading(false);
