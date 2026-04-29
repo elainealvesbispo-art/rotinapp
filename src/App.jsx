@@ -684,52 +684,90 @@ function SelectionModal({groupId,groupMeta,currentItem,onSelect,onClose}){
   const filtered=search?options.filter(o=>o.toLowerCase().includes(search.toLowerCase())):options;
   return(
     <div style={{position:"fixed",inset:0,zIndex:100,display:"flex",flexDirection:"column",background:"#fff"}}>
-      {/* Header */}
-      <div style={{display:"flex",alignItems:"center",gap:12,padding:"16px",borderBottom:`1px solid ${S[100]}`}}>
-        <button onClick={onClose} style={{width:38,height:38,borderRadius:99,background:S[100],
-          border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,color:S[600]}}>
+      {/* Header com botão voltar e botão limpar */}
+      <div style={{display:"flex",alignItems:"center",gap:12,padding:"16px",borderBottom:"1px solid #f1f5f9"}}>
+        <button onClick={onClose} style={{width:38,height:38,borderRadius:99,background:"#f1f5f9",
+          border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",
+          fontSize:20,color:"#64748b",flexShrink:0}}>
           ‹
         </button>
         <div style={{flex:1}}>
-          <p style={{fontWeight:900,color:S[800],fontSize:15,margin:0}}>{groupMeta.emoji} {groupMeta.label}</p>
-          <p style={{fontSize:11,color:S[400],margin:0}}>{groupMeta.portions} · {groupId}</p>
+          <p style={{fontWeight:900,color:"#1e293b",fontSize:15,margin:0}}>{groupMeta.emoji} {groupMeta.label}</p>
+          <p style={{fontSize:11,color:"#94a3b8",margin:0}}>{groupMeta.portions} · {groupId}</p>
         </div>
+        {currentItem&&(
+          <button onClick={()=>onSelect(null)} style={{
+            fontSize:11,color:"#ef4444",fontWeight:700,
+            background:"#fef2f2",border:"1px solid #fecaca",
+            padding:"5px 12px",borderRadius:99,cursor:"pointer",flexShrink:0,
+          }}>
+            Limpar
+          </button>
+        )}
       </div>
-      {groupMeta.note&&(
-        <div style={{margin:"10px 16px 0",padding:"10px 12px",background:A[50],
-          border:`1px solid ${A[200]}`,borderRadius:12}}>
-          <p style={{fontSize:12,color:A[700],margin:0}}>💡 {groupMeta.note}</p>
+
+      {/* Selecção actual */}
+      {currentItem&&(
+        <div style={{margin:"10px 16px 0",padding:"10px 14px",background:"#f0fdf4",
+          border:"1px solid #bbf7d0",borderRadius:12,display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:18}}>✅</span>
+          <div style={{flex:1}}>
+            <p style={{fontSize:11,fontWeight:700,color:"#16a34a",margin:"0 0 2px"}}>Seleccionado</p>
+            <p style={{fontSize:13,color:"#15803d",fontWeight:500,margin:0}}>{currentItem}</p>
+          </div>
+          <button onClick={()=>onSelect(null)} style={{
+            width:28,height:28,borderRadius:99,background:"#dcfce7",border:"none",
+            cursor:"pointer",fontSize:14,color:"#16a34a",display:"flex",
+            alignItems:"center",justifyContent:"center",
+          }}>✕</button>
         </div>
       )}
-      {/* Search */}
+
+      {groupMeta.note&&(
+        <div style={{margin:"10px 16px 0",padding:"10px 12px",background:"#fffbeb",
+          border:"1px solid #fde68a",borderRadius:12}}>
+          <p style={{fontSize:12,color:"#b45309",margin:0}}>💡 {groupMeta.note}</p>
+        </div>
+      )}
+
+      {/* Pesquisa */}
       <div style={{padding:"12px 16px",position:"relative"}}>
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Pesquisar…"
           style={{width:"100%",padding:"10px 14px 10px 36px",borderRadius:12,border:"none",
-            background:S[100],fontSize:13,color:S[800],outline:"none",fontFamily:"inherit"}}/>
+            background:"#f1f5f9",fontSize:13,color:"#1e293b",outline:"none",fontFamily:"inherit"}}/>
         <span style={{position:"absolute",left:26,top:"50%",transform:"translateY(-50%)",
-          fontSize:14,color:S[400]}}>🔍</span>
+          fontSize:14,color:"#94a3b8"}}>🔍</span>
       </div>
-      {/* Options */}
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 24px",display:"flex",flexDirection:"column",gap:8}}>
+
+      {/* Lista de opções */}
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 32px",display:"flex",flexDirection:"column",gap:8}}>
         {filtered.map((opt,i)=>{
-          const sel=currentItem===opt;
+          const isSel=currentItem===opt;
           return(
-            <button key={i} onClick={()=>onSelect(opt)} style={{
+            <button key={i} onClick={()=>isSel?onSelect(null):onSelect(opt)} style={{
               display:"flex",alignItems:"center",gap:12,padding:"14px 16px",borderRadius:16,
-              border:`2px solid ${sel?E[400]:S[100]}`,background:sel?E[50]:"#fff",
+              border:`2px solid ${isSel?"#4ade80":"#e2e8f0"}`,
+              background:isSel?"#f0fdf4":"#fff",
               cursor:"pointer",textAlign:"left",width:"100%",
             }}>
-              <div style={{width:22,height:22,borderRadius:99,border:`2px solid ${sel?E[500]:S[300]}`,
-                background:sel?E[500]:"transparent",flexShrink:0,
+              <div style={{width:22,height:22,borderRadius:99,
+                border:`2px solid ${isSel?"#22c55e":"#cbd5e1"}`,
+                background:isSel?"#22c55e":"transparent",flexShrink:0,
                 display:"flex",alignItems:"center",justifyContent:"center"}}>
-                {sel&&<span style={{color:"#fff",fontSize:12,fontWeight:700}}>✓</span>}
+                {isSel&&<span style={{color:"#fff",fontSize:12,fontWeight:700}}>✓</span>}
               </div>
-              <span style={{fontSize:14,fontWeight:500,color:sel?E[700]:S[700]}}>{opt}</span>
+              <span style={{fontSize:14,fontWeight:500,color:isSel?"#15803d":"#334155"}}>{opt}</span>
+              {isSel&&(
+                <span style={{marginLeft:"auto",fontSize:11,color:"#ef4444",fontWeight:600,
+                  background:"#fef2f2",padding:"3px 8px",borderRadius:99,flexShrink:0}}>
+                  toque para remover
+                </span>
+              )}
             </button>
           );
         })}
         {filtered.length===0&&(
-          <div style={{textAlign:"center",padding:40,color:S[400]}}>
+          <div style={{textAlign:"center",padding:40,color:"#94a3b8"}}>
             <p style={{fontSize:32,marginBottom:8}}>🔍</p>
             <p style={{fontSize:14,fontWeight:600}}>Nenhum resultado</p>
           </div>
@@ -2612,7 +2650,10 @@ export default function App(){
 
   // Selections NutriTrack
   const handleSelect=async(mealId,groupId,item)=>{
-    const n={...selections,[todayS]:{...(selections[todayS]||{}),[mealId]:{...((selections[todayS]||{})[mealId]||{}),[groupId]:item}}};
+    const mealSels={...((selections[todayS]||{})[mealId]||{})};
+    if(item===null){delete mealSels[groupId];}
+    else{mealSels[groupId]=item;}
+    const n={...selections,[todayS]:{...(selections[todayS]||{}),[mealId]:mealSels}};
     setSelections(n);await stor.set("nt_selections",n);
   };
   const handleFreeMeal=async(mealId,label)=>{
@@ -2625,7 +2666,10 @@ export default function App(){
 
   // Cardápio semanal
   const handleSelectWeek=async(day,mealId,groupId,item)=>{
-    const n={...weekPlan,[day]:{...(weekPlan[day]||{}),[mealId]:{...((weekPlan[day]||{})[mealId]||{}),[groupId]:item}}};
+    const mealSels={...((weekPlan[day]||{})[mealId]||{})};
+    if(item===null){delete mealSels[groupId];}
+    else{mealSels[groupId]=item;}
+    const n={...weekPlan,[day]:{...(weekPlan[day]||{}),[mealId]:mealSels}};
     setWeekPlan(n);await stor.set("nt_weekplan",n);
   };
 
