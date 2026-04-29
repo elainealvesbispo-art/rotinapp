@@ -143,6 +143,7 @@ REGRAS:
 - Varie as frutas G9 ao longo da semana
 
 Retorne SOMENTE JSON válido sem markdown:
+IMPORTANTE: O JSON deve estar COMPLETO com todos os 7 dias. Nunca cortes a resposta a meio.
 {"week_theme":"tema","days":[{"day_index":0,"day_key":"monday","day_label":"Segunda-feira","day_short":"Seg","culinary_influence":"Base brasileira","meals":{"breakfast":{"name":"nome","items":[{"food":"nome","group":"G9","quantity_per_person":135,"unit":"g","measure":"½ und."}],"kids_note":"dica"},"lunch":{"name":"...","items":[...],"kids_note":"..."},"afternoon_snack":{"name":"...","items":[...],"kids_note":"..."},"dinner":{"name":"...","items":[...],"kids_note":"..."},"supper":{"name":"...","items":[...]}}},...7 dias total]}`;
 
 // ─────────────────────────────────────────────
@@ -194,7 +195,7 @@ export default function MealPlanSession() {
         },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 4000,
+          max_tokens: 8000,
           system: SYSTEM_PROMPT,
           messages: [{
             role: "user",
