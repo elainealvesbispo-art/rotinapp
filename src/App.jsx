@@ -905,7 +905,7 @@ function MealLogTab({selections,onSelect,rewards,onFreeMeal}){
           groupId={activeGroup.groupId}
           groupMeta={activeGroup.groupMeta}
           currentItem={selections[activeMeal]?.[activeGroup.groupId]}
-          onSelect={item=>{onSelect(activeMeal,activeGroup.groupId,item);setActiveGroup(null);}}
+          onSelect={item=>{onSelect(activeMeal,activeGroup.groupId,item===((selections[activeMeal]||{})[activeGroup.groupId])?null:item);}}
           onClose={()=>setActiveGroup(null)}/>
       )}
 
@@ -1184,8 +1184,8 @@ Formato de resposta:
           groupMeta={activeGroup.groupMeta}
           currentItem={(weekPlan[activeGroup.day]?.[activeGroup.mealId]||{})[activeGroup.groupId]}
           onSelect={item=>{
-            onSelectWeek(activeGroup.day,activeGroup.mealId,activeGroup.groupId,item);
-            setActiveGroup(null);
+            const current=(weekPlan[activeGroup.day]?.[activeGroup.mealId]||{})[activeGroup.groupId];
+            onSelectWeek(activeGroup.day,activeGroup.mealId,activeGroup.groupId,item===current?null:item);
           }}
           onClose={()=>setActiveGroup(null)}/>
       )}
